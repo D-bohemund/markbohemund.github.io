@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"markbohemund.github.io.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在上一篇我们做好了小鸟飞行的功能，接下来我们要制作游戏的另一重要元素——管道。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="unity学习(七) unity制做Flappy Bird(三)">
+<meta property="og:url" content="http://markbohemund.github.io.com/2021/12/26/Unity05/index.html">
+<meta property="og:site_name" content="Tong">
+<meta property="og:description" content="在上一篇我们做好了小鸟飞行的功能，接下来我们要制作游戏的另一重要元素——管道。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/26/Unity05/pipe01.gif">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/26/Unity05/pipe02.gif">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/26/Unity05/001.jpg">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/26/Unity05/pipe03.gif">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/26/Unity05/pipe04.gif">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/26/Unity05/pipe05.gif">
+<meta property="article:published_time" content="2021-12-26T03:35:31.000Z">
+<meta property="article:modified_time" content="2021-12-30T02:11:28.637Z">
+<meta property="article:author" content="Tong">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://markbohemund.github.io.com/2021/12/26/Unity05/pipe01.gif">
+
+<link rel="canonical" href="http://markbohemund.github.io.com/2021/12/26/Unity05/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>unity学习(七) unity制做Flappy Bird(三) | Tong</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tong</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://markbohemund.github.io.com/2021/12/26/Unity05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Tong">
+      <meta itemprop="description" content="一天进步一小步">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tong">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          unity学习(七) unity制做Flappy Bird(三)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-26 11:35:31" itemprop="dateCreated datePublished" datetime="2021-12-26T11:35:31+08:00">2021-12-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-30 10:11:28" itemprop="dateModified" datetime="2021-12-30T10:11:28+08:00">2021-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity3d/" itemprop="url" rel="index"><span itemprop="name">Unity3d</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p> 在上一篇我们做好了小鸟飞行的功能，接下来我们要制作游戏的另一重要元素——管道。</p>
+<span id="more"></span>
+
+<p>首先，我们在Project视窗里找到pipe_down和pipe_up,将其拖入Hierarchy，在Sprite Renderer里设置它们的Order in Layer为1，这样它们就不会被背景遮挡。</p>
+<p>然后调整两个管道的位置，你可以直接在Transfrom组件里通过设置position的X，Y值来调整，也可以手动拖拽来调整。两根管道的位置设置好后，在Hierarchy视窗里鼠标右键 —- Create Empty，这样会创造一个空物体，命名为Pipe，然后分别将两个管道拖入Pipe，这样我们就可以通过控制Pipe来控制两根管道</p>
+<center><img src="pipe01.gif" width = "" height = ""></center>
+
+<p>然后在Pipe里新增一个脚本，命名为PipeMove,来控制管道移动，在脚本里输入以下代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class PipeMove : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public GameObject pipe;</span><br><span class="line">    float v = 1;</span><br><span class="line">    // Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        pipe.transform.position += Vector3.left * v * Time.deltaTime; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>试下效果</p>
+<center><img src="pipe02.gif" width = "" height = ""></center>
+
+<p>虽然管道动起来了，但是好像有什么地方不对。</p>
+<p><img src="001.jpg" alt="001"></p>
+<p>给pipe_down和pipe_up分别加上Box Collider 2D组件，同时勾选Auto Tiling</p>
+<center><img src="pipe03.gif" width = "" height = ""></center>
+
+<p>ok,小鸟开始符合物理世界的设定了，接下来就要使得管道不断地生成并向前移动。这里要提一个重要的概念——预制件(Prefabs)。预制件就是提前做好的物体，如果在场景中有物体我们需要大量使用，重复使用，例如游戏场景中的树木，箱子，木桶等，那么将这个物体做成预制件就可以节省我们很多时间。只用在需要的地方调用这个预制件，而不需要再创建大量的物体。现在就把Pipe做成预制件，方便我们之后大量生成管道。首先在Project视窗新建一个文件夹，命名为Prefabs，在Hierarchy里选择Pipe，将其拖入Prefabs文件夹即可。</p>
+<center><img src="pipe04.gif" width = "" height = ""></center>
+
+<p>之后把Hierarchy视窗里的Pipe删除，创建一个空物体。命名为PipeController，我们用这个来当作管道的生成点，给它新加一个脚本，命名为PipeController，输入以下代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class PipeController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public GameObject pipePrefabs;</span><br><span class="line">    public float time = 1.5f;//生成管道的时间间隔</span><br><span class="line">    float timer = 0;//计时器</span><br><span class="line">    public float pipeHeight = 0.5f;</span><br><span class="line">    // Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        timer += Time.deltaTime;</span><br><span class="line">        if (timer &gt;= time) </span><br><span class="line">        &#123;</span><br><span class="line">            GameObject pipeClone = Instantiate(pipePrefabs);//生成管道</span><br><span class="line">            pipeClone.transform.position = new Vector3(transform.position.x, Random.Range(pipeHeight, -pipeHeight), transform.position.z);//设定管道的位置</span><br><span class="line">            timer = 0;//重制计时器</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是这样有一个问题，无限生成的管道不会自己销毁，这样游玩一段时间后会在屏幕外产生很多管道，最后会导致崩溃，所以这里要设置当管道移出屏幕后自动销毁。在PipeController.cs里面新加一句Destroy(pipeClone, 10);</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class PipeController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public GameObject pipePrefabs;</span><br><span class="line">    public float time = 1.5f;//生成管道的时间间隔</span><br><span class="line">    float timer = 0;//计时器</span><br><span class="line">    public float pipeHeight = 0.5f;</span><br><span class="line">    // Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        timer += Time.deltaTime;</span><br><span class="line">        if (timer &gt;= time) </span><br><span class="line">        &#123;</span><br><span class="line">            GameObject pipeClone = Instantiate(pipePrefabs);//生成管道</span><br><span class="line">            pipeClone.transform.position = new Vector3(transform.position.x, Random.Range(pipeHeight, -pipeHeight), transform.position.z);//设定管道的位置</span><br><span class="line">            timer = 0;//重制计时器</span><br><span class="line">            Destroy(pipeClone, 10);//10秒后销毁管道</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center><img src="pipe05.gif" width = "" height = ""></center>
+
+<p>这样，管道的基本功能就好了。下一篇将会处理小鸟的死亡和设置得分。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/25/Unity04/" rel="prev" title="unity学习(六) unity制做Flappy Bird(二)">
+      <i class="fa fa-chevron-left"></i> unity学习(六) unity制做Flappy Bird(二)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/26/Unity06/" rel="next" title="unity学习(八) unity制做Flappy Bird(四)">
+      unity学习(八) unity制做Flappy Bird(四) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tong"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Tong</p>
+  <div class="site-description" itemprop="description">一天进步一小步</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"markbohemund.github.io.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在开始实际操作前，要着重介绍下Unity的性质和重要概念，在明白了这些基础知识后才能在实操中保持清楚的头脑和清晰的思路。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity学习(三) Unity的重要概念">
+<meta property="og:url" content="http://markbohemund.github.io.com/2021/12/23/Unity08/index.html">
+<meta property="og:site_name" content="Tong">
+<meta property="og:description" content="在开始实际操作前，要着重介绍下Unity的性质和重要概念，在明白了这些基础知识后才能在实操中保持清楚的头脑和清晰的思路。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-23T11:12:26.000Z">
+<meta property="article:modified_time" content="2021-12-30T02:11:36.231Z">
+<meta property="article:author" content="Tong">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://markbohemund.github.io.com/2021/12/23/Unity08/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Unity学习(三) Unity的重要概念 | Tong</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tong</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://markbohemund.github.io.com/2021/12/23/Unity08/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Tong">
+      <meta itemprop="description" content="一天进步一小步">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tong">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity学习(三) Unity的重要概念
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-23 19:12:26" itemprop="dateCreated datePublished" datetime="2021-12-23T19:12:26+08:00">2021-12-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-30 10:11:36" itemprop="dateModified" datetime="2021-12-30T10:11:36+08:00">2021-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity3d/" itemprop="url" rel="index"><span itemprop="name">Unity3d</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p> 在开始实际操作前，要着重介绍下Unity的性质和重要概念，在明白了这些基础知识后才能在实操中保持清楚的头脑和清晰的思路。</p>
+<span id="more"></span>
+
+<p>一、Unity的重要概念</p>
+<p>1、场景(Scene)</p>
+<p>场景是Unity的重要元素之一，那些酷炫的游戏画面和动画都是通过不同的场景之间切换得来的。场景是游戏对象聚集的地方，打比方说，场景就像是一个汽车的底盘，它上面承载着其他组成整个汽车的组件。</p>
+<p>2、游戏对象(Game Object)</p>
+<p>在场景中处于激活状态的物体对象我们称为游戏对象。如何激活游戏对象？只需将资源从Project视窗里拖入Scene和Hierarchy视窗即可，当然不是所有的资源都能拖入Scene，只有符合Unity要求的资源才能成为游戏对象</p>
+<p>3、组件(Component)</p>
+<p>组件简单来说就是拓展工具，它附加在游戏对象上即可让游戏对象立刻获得某种功能。组件有很多种类，用来声明游戏对象的行为，外表，类别和属性。其实任何能附加在游戏对象上的附件都可以称之为组件，例如脚本其实也可以算作组件的一种，但它又和我们常识中的组件的模样相差甚远。</p>
+<p>4、脚本(Script)</p>
+<p>脚本是代码的集合，也是对数据进行最终处理的地方。</p>
+<p>二、Unity重要的类</p>
+<p>类是一系列对象的定义，它定义了对象名称意味了什么，对象能发生什么作用，也就是说，类定义了对象由什么组成，能干什么，有什么行为和特征。</p>
+<p>Unity有很多的基础类，清楚这些类的属性能帮我们节省很多开发时间。下面就介绍几个Unity中重要的类：</p>
+<p>1、Input类</p>
+<p>input类是用来侦测是否有数据输入的类</p>
+<p>【重要属性】</p>
+<p>anyKey ： 是否有任意按键或鼠标键被按下</p>
+<p>anyKeyDown：在用户按下任意按键或鼠标时，首帧(第一次)返回信号true</p>
+<p>inputString：返回在这一帧的键盘输入</p>
+<p>location：用于访问设备的位置信息</p>
+<p>mousePosition：获取当前鼠标的坐标位置</p>
+<p>【重要方法】</p>
+<p>GetKey：当用户按下指定的按钮时，一直返回信号true</p>
+<p>GetKeyDown：当用户按下指定按钮时，首帧(按下的那一刻)返回true</p>
+<p>GetKeyUp：用户松手时的那一刻返回true</p>
+<p>GetMouseButton：当指定的鼠标按钮被按下时那一刻返回true</p>
+<p>GetMouseButtonDown：在用户按下指定的鼠标按键时返回true</p>
+<p>GetMouseButtonUp：当用户松开指定戍边按键时返回ture</p>
+<p>input类主要用于侦测用户的手部输入，常用于射击类游戏和MOBA类游戏</p>
+<p>2、GameObject类</p>
+<p>【重要属性】</p>
+<p>Name ：对象名</p>
+<p>Tag：对象的标签</p>
+<p>Layer：对象的层级</p>
+<p>activeInHierarchy：判断对象是否在Hierarchy视窗里被隐藏</p>
+<p>activeSelf：对象现在的状态</p>
+<p>isStatic：是否为静态对象(意味着这个对象是唯一的)</p>
+<p>transform：对象的位置信息</p>
+<p>scene：对象的场景信息</p>
+<p>【重要方法】</p>
+<p>SetActive：传入bool参数（true/false）可以使当前物体显示或者隐藏<br>AddComponent：为游戏对象添加组件，脚本<br>CompareTag：传入字符串参数（“TagName”）当前游戏对象的tag值是否为参数TagName,名字一样返回True，反之False。           </p>
+<p>GetComponent：获取游戏对象的组件，脚本<br>GetComponentInChildren：返回此游戏对象或者它的所有子对象上(深度优先)的类型为type的组件。<br>GetComponentInParent：从父对象查找组件。</p>
+<p>GetComponents ：返回该游戏对象所有type类型的组件列表。<br>GetComponentsInChildren ：返回此游戏对象与其子对象所有type类型的组件。<br>GetComponentsInParent  ：返回此游戏对象与其父对象所有type类型的组件。</p>
+<p>BroadcastMessage：对此游戏对象及其子对象的所有MonoBehaviour中调用名称为methodName的方法。<br>SendMessage ：在这个游戏物体上的所有MonoBehaviour上调用名称为methodName的方法。<br>SendMessageUpwards：在这个游戏物体及其祖先物体的所有MonoBehaviour中调用名称为methodName的方法。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/22/Unity07/" rel="prev" title="Unity学习(二) Unity及相关辅助工具安装">
+      <i class="fa fa-chevron-left"></i> Unity学习(二) Unity及相关辅助工具安装
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/23/Unity10/" rel="next" title="Markdown语法">
+      Markdown语法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tong"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Tong</p>
+  <div class="site-description" itemprop="description">一天进步一小步</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

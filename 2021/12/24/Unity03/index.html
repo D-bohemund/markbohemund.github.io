@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"markbohemund.github.io.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前面介绍了Unity的界面和组件，今天就用这些来制作一款简单的游戏来加深对Unity的认识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="unity学习(五) unity制做Flappy Bird(一)">
+<meta property="og:url" content="http://markbohemund.github.io.com/2021/12/24/Unity03/index.html">
+<meta property="og:site_name" content="Tong">
+<meta property="og:description" content="前面介绍了Unity的界面和组件，今天就用这些来制作一款简单的游戏来加深对Unity的认识。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/00.png">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/01.png">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/02.png">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/03.png">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/image-20211229011243966.png">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/image-20211229012125942.png">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/04.png">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/Bird.gif">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/land01.gif">
+<meta property="og:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/land02.gif">
+<meta property="article:published_time" content="2021-12-24T14:15:47.000Z">
+<meta property="article:modified_time" content="2021-12-30T02:11:45.680Z">
+<meta property="article:author" content="Tong">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://markbohemund.github.io.com/2021/12/24/Unity03/00.png">
+
+<link rel="canonical" href="http://markbohemund.github.io.com/2021/12/24/Unity03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>unity学习(五) unity制做Flappy Bird(一) | Tong</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tong</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://markbohemund.github.io.com/2021/12/24/Unity03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Tong">
+      <meta itemprop="description" content="一天进步一小步">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tong">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          unity学习(五) unity制做Flappy Bird(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-24 22:15:47" itemprop="dateCreated datePublished" datetime="2021-12-24T22:15:47+08:00">2021-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-30 10:11:45" itemprop="dateModified" datetime="2021-12-30T10:11:45+08:00">2021-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity3d/" itemprop="url" rel="index"><span itemprop="name">Unity3d</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p> 前面介绍了Unity的界面和组件，今天就用这些来制作一款简单的游戏来加深对Unity的认识。</p>
+<span id="more"></span>
+
+<p>一、Flappy Bird</p>
+<p>Flappy Bird曾是一款风靡全世界的手机游戏，据传其作者开发这款游戏只用了3天，于2013年发布，已发布就成为年度最热门的免费游戏，至今此游戏的下载次数以超过5000万次。今天就使用Unity对这款游戏进行重制。</p>
+<p>二、准备工作</p>
+<p>首先，从网上下载Flappy Bird的游戏素材，相关素材我会稍后给出。</p>
+<p><img src="00.png" alt="00"></p>
+<p>接着打开Unity，新建一个名为Flappy Bird的2D工程，并设置工程的保存路径</p>
+<p><img src="01.png" alt="01"></p>
+<p>点击Create后进入Unity，然后在Project视图会自动生成Assets和Packages两个文件夹，右键Assets文件夹，选择Create — Folder，将新建的文件夹重命名为Resource。然后右键Resource文件夹 — Import New Asset，在弹出的界面里找到放素材的文件夹，ctrl+a全选，然后点击Import。准备工作就做完了</p>
+<p><img src="02.png" alt="02"></p>
+<p><img src="03.png" alt="03"></p>
+<p>三、制作游戏场景</p>
+<p>在Assets文件夹下有一个Scenes文件夹，在这里Unity会自动生成一个场景。Flappy Bird的游戏原理非常简单，这里使用一个场景就够了。在Resource文件夹我们可以看到之前我们导入Unity的图像素材，这里我们先制作背景，将bg_day拖入Scene视图或Hierarchy视图中，然后在Game视图中会发现背景没有铺满屏幕，这时我们要调节屏幕的比例。</p>
+<p><img src="image-20211229011243966.png" alt="image-20211229011243966"></p>
+<p>点击Free Aspect，选择9：16的比例，没有这个比例可以点击最下面的+号自己设置。设置好屏幕分辨率后，调整Camera的大小来切合背景，在Hierarchy视图里选择Main Camera，然后在Inspector视图里在Camera — size一栏，设置2.55左右。然后将land拖入Scene中，拖拽调整位置，最后得到这样的背景</p>
+<p><img src="image-20211229012125942.png" alt="image-20211229012125942"></p>
+<p>接下来制作飞行的小鸟，我们利用Unity自带的动画制作工具Animation来制作。在Resource文件夹里shift+鼠标左键依次选择bird0_0–bird0_2，然后将其拖入Scene视图，此时会弹出一个窗口，给这个动画起名Bird，点击Save。会飞行的小鸟就做好了，然后可以在Animation视窗了调整动画效果</p>
+<p><img src="04.png" alt="04"></p>
+<p>在Animation视窗里我们发现小鸟挥动翅膀极其鬼畜，因此我们调整下动画帧数，如下</p>
+<center><img src="Bird.gif" width = "" height = ""></center>
+
+<p>制作完小鸟的动画，但是背景并不会随着小鸟挥动翅膀而前进，所以我们还需要制作一个脚本来使得背景”跟着”小鸟移动。</p>
+<p>选中land，在Inspector中将Draw Mode设置为Tiled，这样对land进行拉伸时图像就会平铺。接下来使用左上角的Rect Tool(快捷键 T)，将land拉伸</p>
+<center><img src="land01.gif" width = "" height = ""></center>
+
+<p>然后我们编写一个脚本来控制地面移动。选中Hierarchy视窗里的land，在Inspector视窗，点击Add Component —- New Script，将脚本命名为LandMove。此时land的Inspector就多出了LandMove脚本组件，右键点击 — edit script，进入编辑界面。在编辑界面输入以下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class LandMove : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public GameObject m_land;</span><br><span class="line">    float X;</span><br><span class="line">    // Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        m_land = GameObject.Find(&quot;land&quot;);//找到land对象</span><br><span class="line">    &#125;</span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()//每一帧触发一次</span><br><span class="line">    &#123;</span><br><span class="line">        float X = m_land.transform.position.x;//取得land的x坐标</span><br><span class="line">        m_land.transform.Translate(Vector3.right * -1 * Time.deltaTime, m_land.transform);//使得land朝-x轴方向匀速移动</span><br><span class="line">        if (X &lt;= -1.5f)//根据land的x坐标判断，当地面快要脱离背景时，让地面回到指定位置</span><br><span class="line">            m_land.transform.position = new Vector3(1.5f, -2f, 0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ctrl+s保存后返回Unity界面，你会发现LandMove脚本组件多了一栏Land，此时将Hierarchy视窗里的land拖入这栏，然后点击正上方的播放键就会的到以下效果：</p>
+<center><img src="land02.gif" width = "" height = ""></center>
+
+<p>这样就看起来自然多了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/23/Unity02/" rel="prev" title="Unity学习(四) Unity组件">
+      <i class="fa fa-chevron-left"></i> Unity学习(四) Unity组件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/25/Unity04/" rel="next" title="unity学习(六) unity制做Flappy Bird(二)">
+      unity学习(六) unity制做Flappy Bird(二) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tong"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Tong</p>
+  <div class="site-description" itemprop="description">一天进步一小步</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
